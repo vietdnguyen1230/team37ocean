@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { axiosInstance } from "../../config";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const WritePost = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -160,7 +161,9 @@ const WritePost = () => {
         </div>
         <div className='flex items-center justify-between'>
           {!user ? (
-            <div>Sign in to publish</div>
+            <button className='bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
+              <Link to='/login'>Sign in to publish</Link>
+            </button>
           ) : (
             <button
               className='bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
