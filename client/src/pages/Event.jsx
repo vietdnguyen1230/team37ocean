@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/solid";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Home/Footer";
 import { axiosInstance } from "../config";
 import Navbar from "../components/Home/Navbar";
 import { addTask } from "../redux/taskRedux";
 
 const Event = () => {
+  const user = useSelector((state) => state.user.currentUser);
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [task, setTasks] = useState({});
@@ -124,12 +125,18 @@ const Event = () => {
                 <span class='title-font font-medium text-2xl text-teal-600'>
                   {task.rewards} Reward Points
                 </span>
-                <button
-                  onClick={handleSubmit}
-                  className='flex ml-auto text-white bg-teal-600 border-0 py-2 px-6 focus:outline-none hover:bg-teal-500 rounded'
-                >
-                  Enroll Now
-                </button>
+                {!user ? (
+                  <button className='flex ml-auto text-white bg-red-600 border-0 py-2 px-6 focus:outline-none rounded'>
+                    <Link to='/login'>Sign in to enroll</Link>
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleSubmit}
+                    className='flex ml-auto text-white bg-teal-600 border-0 py-2 px-6 focus:outline-none hover:bg-teal-500 rounded'
+                  >
+                    Enroll Now
+                  </button>
+                )}
               </div>
             </div>
           </div>
